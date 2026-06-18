@@ -1,20 +1,17 @@
-# Rate Limiter Sdk
+# Rate Limiter SDK
 
-Distributed rate limiter: sliding window, token bucket, leaky bucket.
+Distributed rate limiter: token bucket, sliding window, leaky bucket with Redis backend.
 
 ## Algorithms
 - Token bucket (burst-friendly)
-- Sliding window (precise)
-- Leaky bucket (smooth)
+- Sliding window (precise count)
+- Leaky bucket (smooth output)
 - Redis-backed distributed mode
 
 ## Usage
 ```go
-limiter := ratelimit.New(redisClient, ratelimit.SlidingWindow(100, time.Minute))
-if limiter.Allow(userID) {
-    handleRequest()
-}
+limiter := ratelimit.New(client, ratelimit.SlidingWindow(100, time.Minute))
+if limiter.Allow("user-123") { handleRequest() }
 ```
 
-## License
-MIT
+## License: MIT
